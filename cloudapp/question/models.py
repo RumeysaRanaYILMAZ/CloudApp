@@ -8,7 +8,7 @@ from exam.models import Assignment, Exam
 def validate_choice(value):
     if value > 4:
         raise ValidationError(
-            _('Index %(value)s is not a choice'),
+            ('Index %(value)s is not a choice'),
             params={'value': value},
         )
 

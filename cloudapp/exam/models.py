@@ -1,6 +1,6 @@
 from django import db
 from django.db import models
-from django.db.models.fields import CharField, DateTimeField
+from django.db.models.fields import CharField, DateTimeField, IntegerField
 from django.db.models.fields.related import ForeignKey
 from user.models import SysUser
 # Create your models here.
@@ -31,6 +31,8 @@ class Assignment(models.Model):
                           db_column='STUDENT',
                           on_delete=models.CASCADE)
     exam_id = ForeignKey(Exam, db_column='EXAMID', on_delete=models.CASCADE)
+
+    result = IntegerField(db_column='RESULT', default=0)
 
     class Meta:
         db_table = "ASSIGNMENT"
