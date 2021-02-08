@@ -7,10 +7,7 @@ from user.models import SysUser
 
 
 class Exam(models.Model):
-    id = CharField(max_length=20,
-                   primary_key=True,
-                   db_column='EXAMID',
-                   auto_created=True)
+    id = CharField(max_length=20, primary_key=True, db_column='EXAMID')
     name = CharField(max_length=100, db_column='EXNAME')
     organizer = ForeignKey(SysUser,
                            default=None,
@@ -27,6 +24,7 @@ class Exam(models.Model):
 
 
 class Assignment(models.Model):
+    id = CharField(max_length=20, primary_key=True, db_column='id')
     username = ForeignKey(SysUser,
                           db_column='STUDENT',
                           on_delete=models.CASCADE)

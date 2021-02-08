@@ -1,3 +1,4 @@
+from cloudapp.utils import Entity, IDGenerator
 from user.models import SysUser
 from exam.models import Assignment, Exam
 from question.models import Answer, Question
@@ -16,7 +17,9 @@ class ExamController:
         question.save()
 
     def question_add(self, contxt, ch1, ch2, ch3, ch4, corr):
-        Question(exam_id=self.exam.id,
+        questid = IDGenerator.generate(Entity.Question)
+        Question(id=questid,
+                 exam_id=self.exam.id,
                  context=contxt,
                  choice1=ch1,
                  choice1=ch2,
@@ -25,7 +28,8 @@ class ExamController:
                  correct=corr).save()
 
     def assign(self, usname):
-        Assignment(exam_id=self.exam.id, username=usname)
+        assignid = IDGenerator.generate(Entity.Assignment)
+        Assignment(id=assignid, exam_id=self.exam.id, username=usname)
 
     def result_calculate(self, usname):
         results = {"correct": 0, "wrong": 0}

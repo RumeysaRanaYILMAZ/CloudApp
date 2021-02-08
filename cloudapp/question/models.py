@@ -15,10 +15,7 @@ def validate_choice(value):
 
 # Create your models here.
 class Question(models.Model):
-    id = CharField(max_length=20,
-                   primary_key=True,
-                   db_column='QUESTID',
-                   auto_created=True)
+    id = CharField(max_length=20, primary_key=True, db_column='QUESTID')
     exam_id = ForeignKey(Exam,
                          default=None,
                          db_column='EXAMID',
@@ -37,6 +34,7 @@ class Question(models.Model):
 
 
 class Answer(models.Model):
+    id = CharField(max_length=20, primary_key=True, db_column='id')
     question_id = ForeignKey(Question,
                              db_column='QUESTID',
                              default='',
