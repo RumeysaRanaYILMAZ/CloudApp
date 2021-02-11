@@ -15,7 +15,7 @@ def validate_choice(value):
 
 # Create your models here.
 class Question(models.Model):
-    id = CharField(max_length=20, primary_key=True, db_column='QUESTID')
+    id = CharField(max_length=20, primary_key=True, db_column='id')
     exam_id = ForeignKey(Exam,
                          default=None,
                          db_column='EXAMID',

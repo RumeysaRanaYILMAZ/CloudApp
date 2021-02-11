@@ -8,9 +8,8 @@ from django.shortcuts import get_object_or_404
 class OrganizerController:
     organizer = None
 
-    def __init__(self, usname):
-        self.organizer = SysUser.objects.filter(username=usname,
-                                                is_organizer=True)
+    def __init__(self, email):
+        self.organizer = SysUser.objects.filter(mail=email, is_organizer=True)
 
     def create_exam(self, name, start, end):
         examid = IDGenerator.generate(Entity.Exam)
@@ -23,7 +22,7 @@ class OrganizerController:
 
 class UserController:
     @staticmethod
-    def user_add(username, password, mail, name, surname, isorganizer):
+    def user_add(password, email, first_name, last_name, isorganizer):
         userid = IDGenerator.generate(Entity.SysUser)
         key = Fernet.generate_key()
         cipher_suite = Fernet(key)
@@ -31,18 +30,14 @@ class UserController:
         SysUser.objects.update_or_create(id=userid,
                                          password=hashpass,
                                          saltkey=key,
-                                         is_superuser=False,
-                                         username=username,
-                                         first_name=name,
-                                         last_name=surname,
-                                         email=mail,
-                                         is_staff=False,
-                                         is_active=True,
+                                         name=first_name,
+                                         surname=last_name,
+                                         mail=email,
                                          is_organizer=isorganizer)
 
     @staticmethod
-    def login(usname, password):
-        loguser = get_object_or_404(SysUser, username=usname)
+    def login(email, password):
+        loguser = get_object_or_404(SysUser, mail=email)
         cipher_suite = Fernet(loguser.key)
         if password == cipher_suite.decrypt(loguser.hashpass).decode('utf-8'):
             return True
