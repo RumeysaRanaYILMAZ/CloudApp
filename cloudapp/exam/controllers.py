@@ -14,9 +14,6 @@ class ExamController:
             self.exam = Exam.objects.filter(pk=examid).get()
             self.questset = Question.objects.filter(exam_id=examid)
 
-    def question_add(self, question):
-        question.save()
-
     def question_add(self, contxt, ch1, ch2, ch3, ch4, corr):
         questid = IDGenerator.generate(Entity.Question)
         Question(id=questid,
