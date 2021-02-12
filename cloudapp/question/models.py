@@ -66,6 +66,10 @@ class CreatedQuiz:
         self.start_date = start
         self.end_date = end
 
+    def __str__(self):
+        return "Organizer : " + self.first_name + " " + self.last_name + " Exam Name : " + self.quiz_name + " Start Time : " + self.start_date.__str__(
+        ) + " End Date : " + self.end_date.__str__()
+
 
 class AssignedQuiz:
     first_name = None
@@ -80,3 +84,7 @@ class AssignedQuiz:
         self.quiz_name = qname
         self.start_date = start
         self.end_date = end
+
+    def __str__(self):
+        return "Organizer : " + self.first_name + " " + self.last_name + " Exam Name : " + self.quiz_name + " Start Time : " + self.start_date.__str__(
+        ) + " End Date : " + self.end_date.__str__()
