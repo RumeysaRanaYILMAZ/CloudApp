@@ -1,7 +1,7 @@
 from cloudapp.utils import Entity, IDGenerator
-from user.models import SysUser
 from exam.models import Assignment, Exam
-from question.models import Answer, Question
+from question.models import Answer, AssignedQuiz, Question, CreatedQuiz
+from user.models import User
 
 
 class ExamController:
@@ -19,17 +19,18 @@ class ExamController:
     def question_add(self, contxt, ch1, ch2, ch3, ch4, corr):
         questid = IDGenerator.generate(Entity.Question)
         Question(id=questid,
-                 exam_id=self.exam.id,
+                 exam_id=self.exam,
                  context=contxt,
                  choice1=ch1,
-                 choice1=ch2,
-                 choice1=ch3,
-                 choice1=ch4,
+                 choice2=ch2,
+                 choice3=ch3,
+                 choice4=ch4,
                  correct=corr).save()
 
-    def assign(self, usname):
+    def assign(self, userid):
         assignid = IDGenerator.generate(Entity.Assignment)
-        Assignment(id=assignid, exam_id=self.exam.id, username=usname)
+        user = User.objects.filter(id=userid).get()
+        Assignment(id=assignid, exam_id=self.exam, user_id=user).save()
 
     def result_calculate(self, usname):
         results = {"correct": 0, "wrong": 0}
@@ -45,5 +46,31 @@ class ExamController:
                 results["wrong"] += 1
         return results
 
-    def show_assigned_exams(self, usname):
-        return Assignment.objects.filter(username=usname)
+    @staticmethod
+    def show_assigned_exams(email):
+        user = User.objects.filter(mail=email).get()
+        assignments = Assignment.objects.filter(
+            user_id=user.id).prefetch_related('user_id', 'exam_id')
+        examlist = []
+        for assign in assignments:
+            examlist.append(
+                AssignedQuiz(assign.user_id.name, assign.user_id.surname,
+                             assign.exam_id.name, assign.exam_id.start_time,
+                             assign.exam_id.end_time))
+        return examlist
+
+    @staticmethod
+    def show_created_exams(email):
+        examlist = []
+        try:
+            user = User.objects.filter(mail=email, is_organizer=True).get()
+            exams = Exam.objects.filter(
+                organizer=user.id).prefetch_related('organizer')
+            for exam in exams:
+                examlist.append(
+                    CreatedQuiz(exam.organizer.name, exam.organizer.surname,
+                                exam.name, exam.start_time, exam.end_time))
+        except Exception:
+            print("Uygun User bulunamadı")
+
+        return examlist
