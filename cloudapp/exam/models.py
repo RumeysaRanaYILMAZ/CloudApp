@@ -7,7 +7,7 @@ from user.models import User
 
 
 class Exam(models.Model):
-    id = CharField(max_length=20, primary_key=True, db_column='EXAMID')
+    id = CharField(max_length=20, primary_key=True, db_column='id')
     name = CharField(max_length=100, db_column='EXNAME')
     organizer = ForeignKey(User,
                            default=None,

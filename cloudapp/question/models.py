@@ -50,3 +50,33 @@ class Answer(models.Model):
     class Meta:
         db_table = "ANSWER"
         unique_together = (("question_id", "assingment_id"), )
+
+
+class CreatedQuiz:
+    first_name = None
+    last_name = None
+    quiz_name = None
+    start_date = None
+    end_date = None
+
+    def __init__(self, name, surname, qname, start, end):
+        self.first_name = name
+        self.last_name = surname
+        self.quiz_name = qname
+        self.start_date = start
+        self.end_date = end
+
+
+class AssignedQuiz:
+    first_name = None
+    last_name = None
+    quiz_name = None
+    start_date = None
+    end_date = None
+
+    def __init__(self, name, surname, qname, start, end):
+        self.first_name = name
+        self.last_name = surname
+        self.quiz_name = qname
+        self.start_date = start
+        self.end_date = end

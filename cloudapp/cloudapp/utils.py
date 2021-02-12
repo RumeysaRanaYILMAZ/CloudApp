@@ -1,12 +1,12 @@
 import datetime
 from enum import Enum
-from user.models import SysUser
+from user.models import User
 from exam.models import Exam, Assignment
 from question.models import Question, Answer
 
 
 class Entity(Enum):
-    SysUser = 1
+    User = 1
     Exam = 2
     Assignment = 3
     Question = 4
@@ -19,9 +19,9 @@ class IDGenerator:
         idcode = ''
         lastid = ""
         try:
-            if servis == Entity.SysUser:
-                idcode = 'SYS'
-                last_object = SysUser.objects.all().order_by('id').last()
+            if servis == Entity.User:
+                idcode = 'USR'
+                last_object = User.objects.all().order_by('id').last()
                 lastid = last_object.id
             elif servis == Entity.Exam:
                 idcode = 'EXM'
