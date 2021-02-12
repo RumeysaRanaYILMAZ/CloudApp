@@ -31,87 +31,57 @@
 										<div class="section-top-border">
 
                                             <div class="wrapper">
-                                                    <div class="container-fluid">
-                                                        <div class="modal-dialog">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h3>Q. What does CSS stands for?</h3>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <div class="col-xs-3 5"> </div>
-                                                                    <div class="quiz" id="quiz" data-toggle="buttons">
-                                                                        <label class="element-animation1 btn btn-lg btn-danger btn-block"><span class="btn-label"><i class="glyphicon glyphicon-chevron-right"></i></span>
-                                                                        <input type="radio" name="q_answer" value="1"> Computer Style Sheets</label>
-                                                                        <label class="element-animation2 btn btn-lg btn-danger btn-block">
-                                                                            <span class="btn-label"><i class="glyphicon glyphicon-chevron-right">
+                                                   <div class="container-fluid">
+                                                       <form>
+                                                           {% for question in questions %}
 
-                                                                            </i></span> <input type="radio" name="q_answer" value="2">Cascading Style Sheets</label> <label class="element-animation3 btn btn-lg btn-danger btn-block"><span class="btn-label"><i class="glyphicon glyphicon-chevron-right"></i></span> <input type="radio" name="q_answer" value="3">Creative Style Sheets</label> <label class="element-animation4 btn btn-lg btn-danger btn-block"><span class="btn-label"><i class="glyphicon glyphicon-chevron-right"></i></span> <input type="radio" name="q_answer" value="4"> Colorful Style Sheets </label>
+                                                           <div id ="duplicater">
+                                                                <div class="modal-dialog">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h3>Q. {{ question.context}}</h3>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <div class="col-xs-3 5">
+                                                                        </div>
+                                                                        <div class="quiz" id="quiz" data-toggle="buttons">
+                                                                            <label class="element-animation1 btn btn-lg btn-danger btn-block">
+                                                                                <span class="btn-label"><i class="glyphicon glyphicon-chevron-right"></i></span>
+                                                                                <input type="radio" name="q_answer" value="1"> Computer Style Sheets
+                                                                            </label>
+                                                                            <label class="element-animation2 btn btn-lg btn-danger btn-block">
+                                                                                <span class="btn-label"><i class="glyphicon glyphicon-chevron-right"></i></span>
+                                                                                <input type="radio" name="q_answer" value="2">Cascading Style Sheets
+                                                                            </label>
+                                                                            <label class="element-animation3 btn btn-lg btn-danger btn-block active">
+                                                                                <span class="btn-label"><i class="glyphicon glyphicon-chevron-right"></i></span>
+                                                                                <input type="radio" name="q_answer" value="3">Creative Style Sheets
+                                                                            </label>
+                                                                            <label class="element-animation4 btn btn-lg btn-danger btn-block">
+                                                                                <span class="btn-label"><i class="glyphicon glyphicon-chevron-right"></i></span>
+                                                                                <input type="radio" name="q_answer" value="4"> Colorful Style Sheets
+                                                                            </label>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                                </div>
+                                                           <br><br>
+                                                           </div>
+                                                           {% endfor %}
+                                                           <div class="col-xl-12 col-lg-12 col-md-12 ">
+                                                                <div class="d-flex justify-content-end ">
+
+                                                                    <li class="button-header margin-right "><input class="btn btn-primary" type="submit" value="Submit Exam"></li>
+                                                                </div>
+
+
+                                                           </div>
+                                                           <br><br>
+                                                       </form>
+                                                   </div>
                                             </div>
 
-                                            <script>
-                                                var q1 = document.getElementById("q1");
-                                                var q2 = document.getElementById("q2");
-                                                var q3 = document.getElementById("q3");
-                                                var next1 = document.getElementById('next1')
-                                                var back1 = document.getElementById('back1')
-                                                var next2 = document.getElementById('next2')
-                                                var back2 = document.getElementById('back2')
-                                                document.addEventListener('DOMContentLoaded', function() {
-                                                    let query = window.matchMedia("(max-width: 767px)");
-                                                    if (query.matches) {
-                                                        next1.onclick = function() {
-                                                            q1.style.left = "-650px";
-                                                            q2.style.left = "15px";
-                                                        }
-                                                        back1.onclick = function() {
-                                                            q1.style.left = "15px";
-                                                            q2.style.left = "650px";
-                                                        }
-                                                        back2.onclick = function() {
-                                                            q2.style.left = "15px";
-                                                            q3.style.left = "650px";
-                                                        }
-                                                        next2.onclick = function() {
-                                                            q2.style.left = "-650px";
-                                                            q3.style.left = "15px";
-                                                        }
-                                                    } else {
-                                                        next1.onclick = function() {
-                                                            q1.style.left = "-650px";
-                                                            q2.style.left = "50px";
-                                                        }
-                                                        back1.onclick = function() {
-                                                            q1.style.left = "50px";
-                                                            q2.style.left = "650px";
-                                                        }
-                                                        back2.onclick = function() {
-                                                            q2.style.left = "50px";
-                                                            q3.style.left = "650px";
-                                                        }
-                                                        next2.onclick = function() {
-                                                            q2.style.left = "-650px";
-                                                            q3.style.left = "50px";
-                                                        }
-                                                    }
-                                                });
 
-                                                function uncheck() {
-                                                    var rad = document.getElementById('rd')
-                                                    rad.removeAttribute('checked')
-                                                }
-                                                document.addEventListener('DOMContentLoaded', function() {
-                                                    const main = document.querySelector('body')
-                                                    const toggleSwitch = document.querySelector('.slider')
-                                                    toggleSwitch.addEventListener('click', () => {
-                                                        main.classList.toggle('dark-theme')
-                                                    })
-                                                })
-                                            </script>
 										</div>
 
 
@@ -126,5 +96,23 @@
 								</div>
 
     </main>
+
+       <script>
+            var i = 0;
+            var original = document.getElementById('duplicater');
+
+
+            function duplicate() {
+
+                var clone = original.cloneNode(true); // "deep" clone
+                clone.id = "duplicater" + ++i;
+
+
+                // or clone.id = ""; if the divs don't need an ID
+                original.parentNode.appendChild(clone);
+
+
+            }
+    </script>
 {% endblock%}
 
