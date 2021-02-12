@@ -15,7 +15,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf.urls import url, include
+from main.views import main_view
+from question.views import question_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    url(r'^exam/', include('exam.urls')),
+    url(r'^main/', include('user.urls')),
+    url(r'^question/', question_view),
+    url(r'^$',main_view ),
 ]

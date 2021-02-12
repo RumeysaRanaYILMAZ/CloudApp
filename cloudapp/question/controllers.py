@@ -4,6 +4,7 @@ from .models import Answer, Question
 from user.models import User
 
 
+
 class AnswerController:
     @staticmethod
     def answer(questid, email, ansnumber):
