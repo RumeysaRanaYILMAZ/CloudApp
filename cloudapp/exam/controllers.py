@@ -1,7 +1,7 @@
 from question.controllers import QuestionController
 from main.utils import Entity, IDGenerator
-from .models import Assignment, Exam
-from .views import ExamView
+from exam.models import Assignment, Exam
+from exam.examview import ExamView
 from question.models import Answer, AssignedQuiz, Question, CreatedQuiz
 from user.models import User
 
