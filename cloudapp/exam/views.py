@@ -1,5 +1,6 @@
 from exam.controllers import ExamController
 from user.controllers import OrganizerController
+from user.models import User
 from question.models import Question
 from django.shortcuts import render, HttpResponse, get_object_or_404
 from .models import Exam
@@ -38,13 +39,14 @@ def exam_scores(request):
 
 @csrf_exempt
 def exam_create(request):
+    users = User.objects.filter(is_organizer=0)
     if request.method == 'POST':
         questnum = len(request.POST.getlist('question'))
         uscon = OrganizerController(usermail)
         date = datetime.datetime(2021, 12, 2)
         start = datetime.time(8, 30)
         end = datetime.time(10, 30)
-        print()
+        #print(request.POST)
         start_dt = datetime.datetime.combine(date.date(), start)
         end_dt = datetime.datetime.combine(date.date(), end)
         quiz = uscon.create_exam(request.POST['exam_name'], start_dt, end_dt)
@@ -56,4 +58,7 @@ def exam_create(request):
                 request.POST.getlist('ans_3')[i],
                 request.POST.getlist('ans_4')[i],
                 request.POST.getlist('correct_answer')[i])
-    return render(request, 'createExam.html')
+        for student in request.POST.getlist('students'):
+            print(student)
+            ExamController(quiz.id).assign(student)
+    return render(request, 'createExam.html', {'users': users})

@@ -69,7 +69,8 @@ class ExamController:
         examlist = []
         for assign in assignments:
             examlist.append(
-                AssignedQuiz(assign.user_id.name, assign.user_id.surname,
+                AssignedQuiz(assign.exam_id.organizer.name,
+                             assign.exam_id.organizer.surname,
                              assign.exam_id.name, assign.exam_id.start_time,
                              assign.exam_id.end_time))
         return examlist
