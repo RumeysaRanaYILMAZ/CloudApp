@@ -1,5 +1,7 @@
 from exam.controllers import ExamController
-from user.controllers import OrganizerController,User
+
+from user.controllers import OrganizerController
+from user.models import User
 from question.models import Question
 from django.shortcuts import render, HttpResponse, get_object_or_404
 from .models import Exam
@@ -68,3 +70,4 @@ def exam_create(request):
             print(student)
             ExamController(quiz.id).assign(student)
     return render(request, 'createExam.html',{'users':users})
+
