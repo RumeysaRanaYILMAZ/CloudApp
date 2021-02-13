@@ -1,6 +1,7 @@
-from django.db.models.query import QuerySet
-from cloudapp.utils import Entity, IDGenerator
-from exam.models import Assignment, Exam
+from question.controllers import QuestionController
+from main.utils import Entity, IDGenerator
+from .models import Assignment, Exam
+from .views import ExamView
 from question.models import Answer, AssignedQuiz, Question, CreatedQuiz
 from user.models import User
 
@@ -13,6 +14,22 @@ class ExamController:
         if examid is not None:
             self.exam = Exam.objects.filter(pk=examid).get()
             self.questset = Question.objects.filter(exam_id=examid)
+
+    @staticmethod
+    def exam_update(Exam_View):
+        selected = Exam.objects.filter(pk=Exam_View.id).get()
+        selected.name = Exam_View.name
+        selected.start_time = Exam_View.start
+        selected.end_time = Exam_View.end
+        selected.save()
+        for question in Exam_View.questions:
+            questcon = QuestionController(question.id)
+            questcon.question_update(question.context, question.choice1,
+                                     question.choice2, question.choice3,
+                                     question.choice4, question.correct)
+
+    def exam_show(self):
+        return ExamView(self.exam.id)
 
     def question_add(self, contxt, ch1, ch2, ch3, ch4, corr):
         questid = IDGenerator.generate(Entity.Question)
@@ -78,5 +95,6 @@ class ExamController:
     def questions(self):
         return self.questset
 
-    def pointtable(self):
-        Assignment.objects.filter(exam_id=self.exam.id).order_by('result')
+    def examscores(self):
+        return Assignment.objects.filter(
+            exam_id=self.exam.id).order_by('result').reverse()

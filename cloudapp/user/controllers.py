@@ -1,4 +1,4 @@
-from cloudapp.utils import Entity, IDGenerator
+from main.utils import Entity, IDGenerator
 from exam.models import Exam
 from .models import User
 from cryptography.fernet import Fernet
@@ -41,6 +41,6 @@ class UserController:
         loguser = get_object_or_404(User, mail=email)
         cipher_suite = Fernet(loguser.key)
         if password == cipher_suite.decrypt(loguser.hashpass).decode('utf-8'):
-            return True
+            return loguser
         else:
-            return False
+            return None
