@@ -14,11 +14,13 @@ class OrganizerController:
 
     def create_exam(self, name, start, end):
         examid = IDGenerator.generate(Entity.Exam)
-        Exam(id=examid,
-             name=name,
-             organizer=self.organizer,
-             start_time=start,
-             end_time=end).save()
+        new_exam = Exam(id=examid,
+                        name=name,
+                        organizer=self.organizer,
+                        start_time=start,
+                        end_time=end)
+        new_exam.save()
+        return new_exam
 
 
 class UserController:

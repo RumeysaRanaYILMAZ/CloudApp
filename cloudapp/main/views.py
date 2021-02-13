@@ -7,4 +7,4 @@ def main_view(request):
         context = {'isim': 'giriş yapmamış admine kek buğriş'}
     else:
         context = {'isim': 'giriş yapmış admine kek buğriş'}
-    return render(request,'scores.html')
+    return render(request, 'scores.html')

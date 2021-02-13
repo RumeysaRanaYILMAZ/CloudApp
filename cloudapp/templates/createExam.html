@@ -46,8 +46,8 @@
                                             <div class="row">
 												<div class="col-xl-12 col-lg-12 col-md-12">
 													<h3 class="mb-30">Create Questions</h3>
-													<form id="ques "action="#">
-
+													<form id="quest"action="" method="post">
+                                                        <input type="text" name="exam_name" placeholder="Write Exam Name ..." onfocus="this.placeholder = ''" onblur="this.placeholder = 'Write Exam Name ...'" required="" class="single-input">
                                                     <div>
                                                         <div id="duplicater">
 
@@ -87,12 +87,12 @@
                                                             <div class="input-group-icon mt-10">
                                                                 <div class="icon"><i class="fa fa-thumbs-up" aria-hidden="true"></i></div>
                                                                 <div class="form-select" id="default-select">
-                                                                    <select>
+                                                                    <select name="correct_answer">
 
                                                                         <option value="1">A</option>
-                                                                        <option value="1">B</option>
-                                                                        <option value="1">C</option>
-                                                                        <option value="1">D</option>
+                                                                        <option value="2">B</option>
+                                                                        <option value="3">C</option>
+                                                                        <option value="4">D</option>
 
                                                                     </select>
                                                                 </div>
