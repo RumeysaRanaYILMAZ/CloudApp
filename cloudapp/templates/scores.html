@@ -1,0 +1,69 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+            O | Exam Solving
+         {% endblock %}
+
+
+{% block body %}
+         <main>
+        <!--? slider Area Start-->
+        <section class="slider-area slider-area2">
+            <div class="slider-active">
+                <!-- Single Slider -->
+                <div class="single-slider slider-height2">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-xl-8 col-lg-11 col-md-12">
+                                <div class="hero__caption hero__caption2">
+                                    <h1 data-animation="bounceIn" data-delay="0.2s">Scores</h1>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--? Blog Area Start-->
+        <section class="blog_area section-padding">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 mb-12 mb-lg-12">
+                       <div class="section-top-border">
+											<h3 class="mb-30">Scores</h3>
+											<div class="progress-table-wrap">
+												<div class="progress-table">
+													<div class="table-head">
+														<div class="serial">#</div>
+														<div class="country">Name</div>
+														<div class="visit">Score</div>
+														<div class="percentage">Percentages</div>
+													</div>
+
+                                                    {% for ass in assignments %}
+
+                                                        <div class="table-row">
+                                                            <div class="serial"></div>
+                                                            <div class="country">{{ ass.user_id }}</div>
+                                                            <div class="visit">{{ ass.result }}</div>
+                                                            <div class="percentage">
+                                                                <div class="progress">
+                                                                    <div class="progress-bar color-1" role="progressbar" style="width: {{ ass.result }}%" aria-valuenow="{{ ass.result }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                    {% endfor %}
+												</div>
+											</div>
+										</div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+        <!-- Blog Area End -->
+    </main>
+{% endblock%}

@@ -1,4 +1,3 @@
-from django.db.models.query import QuerySet
 from cloudapp.utils import Entity, IDGenerator
 from exam.models import Assignment, Exam
 from question.models import Answer, AssignedQuiz, Question, CreatedQuiz
@@ -13,6 +12,9 @@ class ExamController:
         if examid is not None:
             self.exam = Exam.objects.filter(pk=examid).get()
             self.questset = Question.objects.filter(exam_id=examid)
+
+    def question_add(self, question):
+        question.save()
 
     def question_add(self, contxt, ch1, ch2, ch3, ch4, corr):
         questid = IDGenerator.generate(Entity.Question)
@@ -51,10 +53,8 @@ class ExamController:
             user_id=user.id).prefetch_related('user_id', 'exam_id')
         examlist = []
         for assign in assignments:
-            exm = Exam.objects.filter(
-                id=assign.exam_id.id).prefetch_related('organizer').first()
             examlist.append(
-                AssignedQuiz(exm.organizer.name, exm.organizer.surname,
+                AssignedQuiz(assign.user_id.name, assign.user_id.surname,
                              assign.exam_id.name, assign.exam_id.start_time,
                              assign.exam_id.end_time))
         return examlist
@@ -75,8 +75,11 @@ class ExamController:
 
         return examlist
 
-    def questions(self):
-        return self.questset
 
-    def pointtable(self):
-        Assignment.objects.filter(exam_id=self.exam.id).order_by('result')
+class AssignmentController:
+
+    @staticmethod
+    def scores(examId):
+        assignments = Assignment.objects.filter(exam_id__question=examId).order_by('result').reverse()
+
+        return assignments
