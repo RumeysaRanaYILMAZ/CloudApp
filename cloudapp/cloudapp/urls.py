@@ -24,5 +24,5 @@ urlpatterns = [
     url(r'^exam/', include('exam.urls')),
     url(r'^main/', include('user.urls')),
     url(r'^question/', question_view),
-    url(r'^$',main_view ),
+    url(r'^$', main_view),
 ]
