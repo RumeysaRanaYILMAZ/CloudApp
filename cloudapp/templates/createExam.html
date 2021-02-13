@@ -104,7 +104,27 @@
 
                                                     </div>
 
+                                                            <div class="col-xl-12 col-lg-12 col-md-12 ">
+                                                                <div class="d-flex justify-content-center ">
 
+                                                                   <div class="single-element-widget">
+
+                                                                            <h3 class="mb-30">          Select Students</h3>
+
+                                                                       {% for user in users %}
+                                                                        <div class="form-check">
+                                                                          <input class="form-check-input" type="checkbox" name="students" id="{{ user.id }}" value="{{ user.id }}" checked="">
+                                                                          <label class="form-check-label" style="margin-left: 15px" for="exampleRadios1">
+                                                                            {{ user.name }}  {{ user.surname }}
+                                                                          </label>
+                                                                        </div>
+                                                                       {% endfor %}
+                                                                   </div>
+                                                                </div>
+
+
+                                                             </div>
+                                                            <br><br>
 
 
                                                         <div class="col-xl-12 col-lg-12 col-md-12 ">

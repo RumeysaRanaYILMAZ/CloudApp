@@ -41,8 +41,8 @@ class UserController:
     @staticmethod
     def login(email, password):
         loguser = get_object_or_404(User, mail=email)
-        cipher_suite = Fernet(loguser.key)
-        if password == cipher_suite.decrypt(loguser.hashpass).decode('utf-8'):
+        cipher_suite = Fernet(loguser.saltkey)
+        if password == cipher_suite.decrypt(loguser.password).decode('utf-8'):
             return loguser
         else:
             return None

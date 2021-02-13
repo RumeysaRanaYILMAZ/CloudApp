@@ -3,6 +3,15 @@ from django.core.exceptions import ValidationError
 from django.db.models.fields import CharField, IntegerField
 from django.db.models.fields.related import ForeignKey
 from exam.models import Assignment, Exam
+import datetime as dt
+from enum import Enum
+import pytz
+
+
+class ExamStatus(Enum):
+    NotStarted = " NOT STARTED"
+    Open = "OPEN"
+    TimesUp = "TIME'S UP"
 
 
 def validate_choice(value):
@@ -72,19 +81,22 @@ class CreatedQuiz:
 
 
 class AssignedQuiz:
-    first_name = None
-    last_name = None
+    org_name = None
     quiz_name = None
     start_date = None
     end_date = None
+    status = None
 
     def __init__(self, name, surname, qname, start, end):
-        self.first_name = name
-        self.last_name = surname
+        self.org_name = name + " " + surname
+        utc = pytz.UTC
         self.quiz_name = qname
         self.start_date = start
         self.end_date = end
-
-    def __str__(self):
-        return "Organizer : " + self.first_name + " " + self.last_name + " Exam Name : " + self.quiz_name + " Start Time : " + self.start_date.__str__(
-        ) + " End Date : " + self.end_date.__str__()
+        now = utc.localize(dt.datetime.now())
+        if start > now:
+            self.status = 0
+        elif start < now and end > now:
+            self.status = 1
+        else:
+            self.status = 0
