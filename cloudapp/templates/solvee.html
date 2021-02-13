@@ -32,7 +32,7 @@
 
                                             <div class="wrapper">
                                                    <div class="container-fluid">
-                                                       <form>
+                                                       <form action="" method="POST">
                                                            {% for question in questions %}
 
                                                            <div id ="duplicater">
@@ -47,19 +47,20 @@
                                                                         <div class="quiz" id="quiz" data-toggle="buttons">
                                                                             <label class="element-animation1 btn btn-lg btn-danger btn-block">
                                                                                 <span class="btn-label"><i class="glyphicon glyphicon-chevron-right"></i></span>
-                                                                                <input type="radio" name="q_answer" value="1"> Computer Style Sheets
+                                                                                <input type="checkbox" id=""name="q_answer" value="1">
+                                                                                {{ question.choice1}}
                                                                             </label>
                                                                             <label class="element-animation2 btn btn-lg btn-danger btn-block">
                                                                                 <span class="btn-label"><i class="glyphicon glyphicon-chevron-right"></i></span>
-                                                                                <input type="radio" name="q_answer" value="2">Cascading Style Sheets
+                                                                                <input type="checkbox" name="q_answer" value="2">{{ question.choice2}}
                                                                             </label>
                                                                             <label class="element-animation3 btn btn-lg btn-danger btn-block active">
                                                                                 <span class="btn-label"><i class="glyphicon glyphicon-chevron-right"></i></span>
-                                                                                <input type="radio" name="q_answer" value="3">Creative Style Sheets
+                                                                                <input type="checkbox" name="q_answer" value="3">{{ question.choice3}}
                                                                             </label>
                                                                             <label class="element-animation4 btn btn-lg btn-danger btn-block">
                                                                                 <span class="btn-label"><i class="glyphicon glyphicon-chevron-right"></i></span>
-                                                                                <input type="radio" name="q_answer" value="4"> Colorful Style Sheets
+                                                                                <input type="checkbox" name="q_answer" value="4"> {{ question.choice4}}
                                                                             </label>
                                                                         </div>
                                                                     </div>

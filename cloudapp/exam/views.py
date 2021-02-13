@@ -1,4 +1,5 @@
 from exam.controllers import ExamController
+
 from user.controllers import OrganizerController
 from user.models import User
 from question.models import Question
@@ -17,10 +18,16 @@ def exam_detail(request):
     return HttpResponse('<b>keke delete</b>')
 
 
-def exam_index(request):
-    #if student if instructor ekle
-    exams = Exam.objects.all()
-    return render(request, 'instructor.html', {'exams': exams})
+def exam_index(request): #student için farklı sayfayı instructor için farklı sayfayı render eder.
+    isOrganizer=False  #a is organizer değişkeni olarak düşünün
+
+    if isOrganizer:
+        exams = Exam.objects.all()
+        return render(request, 'instructor.html', {'exams': exams})
+
+    else:
+        return 0
+
 
 
 def exam_delete(request):
@@ -32,14 +39,15 @@ def exam_update(request):
 
 
 def exam_scores(request):
-    #if student if instructor ekle
-    exams = Exam.objects.all()
-    return render(request, 'instructor.html', {'exams': exams})
+    ex_id=1
+
+    ass = ExamController(ex_id).examscores()
+    return render(request, 'scores.html', {'assignments': ass})
 
 
 @csrf_exempt
 def exam_create(request):
-    users = User.objects.filter(is_organizer=0)
+    users=User.objects.filter(is_organizer=0)
     if request.method == 'POST':
         questnum = len(request.POST.getlist('question'))
         uscon = OrganizerController(usermail)
@@ -61,4 +69,5 @@ def exam_create(request):
         for student in request.POST.getlist('students'):
             print(student)
             ExamController(quiz.id).assign(student)
-    return render(request, 'createExam.html', {'users': users})
+    return render(request, 'createExam.html',{'users':users})
+
