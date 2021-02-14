@@ -5,15 +5,20 @@ from exam.controllers import ExamController
 from django.views.decorators.csrf import csrf_exempt
 
 
-# Create your views here. #11.ders 13 14
+@csrf_exempt
 def student_main(request):
+    if request.method == 'GET':
+        print(request.GET)
     mail = request.session['user']
     exams = ExamController.show_assigned_exams(mail)
+
     return render(request, 'student.html', {'exams': exams})
 
 
 def instructor_main(request):
-    return render(request, 'instructor.html')
+    mail = request.session['user']
+    exams = ExamController.show_created_exams(mail)
+    return render(request, 'instructor.html', {'exams': exams})
 
 
 @csrf_exempt
@@ -27,9 +32,13 @@ def login(request):
         userform = UserForm.mail = mail
         if loguser.is_organizer:
             request.session['user'] = loguser.mail
+            request.session['logged'] = 1
+            request.session['organizer'] = 1
             return redirect('../main/instructor', {'userform': userform})
         else:
             request.session['user'] = loguser.mail
+            request.session['logged'] = 1
+            request.session['organizer'] = 0
             return redirect('../main/student', {'userform': userform})
     return render(request, 'login.html')
 

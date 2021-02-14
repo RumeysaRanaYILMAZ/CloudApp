@@ -3,7 +3,7 @@ from exam.controllers import ExamController
 from user.controllers import OrganizerController
 from user.models import User
 from question.models import Question
-from django.shortcuts import render, HttpResponse, get_object_or_404
+from django.shortcuts import render, HttpResponse, get_object_or_404, redirect
 from .models import Exam
 from .forms import QuestionForm
 import datetime
@@ -18,8 +18,10 @@ def exam_detail(request):
     return HttpResponse('<b>keke delete</b>')
 
 
-def exam_index(request): #student için farklı sayfayı instructor için farklı sayfayı render eder.
-    isOrganizer=False  #a is organizer değişkeni olarak düşünün
+def exam_index(
+    request
+):  #student için farklı sayfayı instructor için farklı sayfayı render eder.
+    isOrganizer = False  #a is organizer değişkeni olarak düşünün
 
     if isOrganizer:
         exams = Exam.objects.all()
@@ -29,25 +31,20 @@ def exam_index(request): #student için farklı sayfayı instructor için farkl�
         return 0
 
 
-
-def exam_delete(request):
-    return HttpResponse('<b>keke delete</b>')
-
-
-def exam_update(request):
-    return HttpResponse('<b>keke update</b>')
+@csrf_exempt
+def exam_delete(request, examid):
+    print(examid)
+    return redirect('../main/instructor')
 
 
-def exam_scores(request):
-    ex_id=1
-
-    ass = ExamController(ex_id).examscores()
+def exam_scores(request, exam_id):
+    ass = ExamController(exam_id).examscores()
     return render(request, 'scores.html', {'assignments': ass})
 
 
 @csrf_exempt
 def exam_create(request):
-    users=User.objects.filter(is_organizer=0)
+    users = User.objects.filter(is_organizer=0)
     if request.method == 'POST':
         questnum = len(request.POST.getlist('question'))
         uscon = OrganizerController(usermail)
@@ -69,5 +66,4 @@ def exam_create(request):
         for student in request.POST.getlist('students'):
             print(student)
             ExamController(quiz.id).assign(student)
-    return render(request, 'createExam.html',{'users':users})
-
+    return render(request, 'createExam.html', {'users': users})

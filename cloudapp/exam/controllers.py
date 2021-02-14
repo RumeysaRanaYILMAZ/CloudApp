@@ -47,9 +47,10 @@ class ExamController:
         user = User.objects.filter(id=userid).get()
         Assignment(id=assignid, exam_id=self.exam, user_id=user).save()
 
-    def result_calculate(self, usname):
+    def result_calculate(self, email):
         results = {"correct": 0, "wrong": 0}
-        assignment = Assignment.objects.filter(username=usname,
+        user = User.objects.filter(mail=email).get()
+        assignment = Assignment.objects.filter(user_id=user.id,
                                                exam_id=self.exam.id).get()
         answers = Answer.object.filter(assignment_id=assignment.id)
 
@@ -69,7 +70,7 @@ class ExamController:
         examlist = []
         for assign in assignments:
             examlist.append(
-                AssignedQuiz(assign.exam_id.organizer.name,
+                AssignedQuiz(assign.exam_id.id, assign.exam_id.organizer.name,
                              assign.exam_id.organizer.surname,
                              assign.exam_id.name, assign.exam_id.start_time,
                              assign.exam_id.end_time))
@@ -84,8 +85,9 @@ class ExamController:
                 organizer=user.id).prefetch_related('organizer')
             for exam in exams:
                 examlist.append(
-                    CreatedQuiz(exam.organizer.name, exam.organizer.surname,
-                                exam.name, exam.start_time, exam.end_time))
+                    CreatedQuiz(exam.id, exam.organizer.name,
+                                exam.organizer.surname, exam.name,
+                                exam.start_time, exam.end_time))
         except Exception:
             print("Uygun User bulunamadı")
 

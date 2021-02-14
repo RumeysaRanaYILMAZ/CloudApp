@@ -62,32 +62,30 @@ class Answer(models.Model):
 
 
 class CreatedQuiz:
-    first_name = None
-    last_name = None
-    quiz_name = None
+    id = None
+    org_name = None
+    name = None
     start_date = None
     end_date = None
 
-    def __init__(self, name, surname, qname, start, end):
-        self.first_name = name
-        self.last_name = surname
-        self.quiz_name = qname
+    def __init__(self, exid, name, surname, qname, start, end):
+        self.id = exid
+        self.org_name = name + " " + surname
+        self.name = qname
         self.start_date = start
         self.end_date = end
 
-    def __str__(self):
-        return "Organizer : " + self.first_name + " " + self.last_name + " Exam Name : " + self.quiz_name + " Start Time : " + self.start_date.__str__(
-        ) + " End Date : " + self.end_date.__str__()
-
 
 class AssignedQuiz:
+    id = None
     org_name = None
     quiz_name = None
     start_date = None
     end_date = None
     status = None
 
-    def __init__(self, name, surname, qname, start, end):
+    def __init__(self, exid, name, surname, qname, start, end):
+        self.id = exid
         self.org_name = name + " " + surname
         utc = pytz.UTC
         self.quiz_name = qname

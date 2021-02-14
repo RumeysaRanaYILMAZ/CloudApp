@@ -1,12 +1,14 @@
 from main.utils import Entity, IDGenerator
 from exam.models import Assignment
-from .models import Answer,Question
+from .models import Answer, Question
 from exam.models import Exam
+
 
 class AnswerController:
     @staticmethod
-    def answer(question, usname, ansnumber):
-        assignment = Assignment.objects.filter(username=usname,
+    def answer(questid, usid, ansnumber):
+        question = Question.objects.filter(id=questid).get()
+        assignment = Assignment.objects.filter(user_id=usid,
                                                exam_id=question.exam_id)
         answerid = IDGenerator.generate(Entity.Answer)
         Answer(id=answerid,
