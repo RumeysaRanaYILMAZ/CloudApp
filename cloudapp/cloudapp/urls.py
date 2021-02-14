@@ -22,10 +22,10 @@ from question.views import question_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url(r'^exam/', include('exam.urls')),
+    url(r'^exam/', include('exam.urls', namespace='exam')),
     url(r'^main/', include('user.urls')),
     url(r'^question/', question_view),
     url(r'^$', main_view),
-    url(r'^register/$', register),
-    url(r'^login/$', login)
+    url(r'^register/$', register, name="register"),
+    url(r'^login/$', login, name="login")
 ]
