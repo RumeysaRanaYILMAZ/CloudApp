@@ -2,7 +2,7 @@ from exam.controllers import ExamController
 from question.controllers import AnswerController
 from user.controllers import OrganizerController
 from user.models import User
-from question.models import Question
+from .forms import dateForm
 from django.shortcuts import render, HttpResponse, get_object_or_404, redirect
 from .models import Assignment, Exam
 from .forms import QuestionForm
@@ -66,24 +66,32 @@ def exam_scores(request, exam_id):
 @csrf_exempt
 def exam_create(request):
     users = User.objects.filter(is_organizer=0)
+    date = dateForm
+    warning=""
     if request.method == 'POST':
         questnum = len(request.POST.getlist('question'))
         uscon = OrganizerController(usermail)
         date = datetime.datetime(2021, 2, 16)
-        start = datetime.time(12, 30)
+
         end = datetime.time(15, 30)
-        start_dt = datetime.datetime.combine(date.date(), start)
         end_dt = datetime.datetime.combine(date.date(), end)
+        start_dt=end_dt
         quiz = uscon.create_exam(request.POST['exam_name'], start_dt, end_dt)
+        sum = 0
         for i in range(questnum):
+            sum += int(request.POST.getlist('point')[i])
             ExamController(quiz.id).question_add(
                 request.POST.getlist('question')[i],
                 request.POST.getlist('ans_1')[i],
                 request.POST.getlist('ans_2')[i],
                 request.POST.getlist('ans_3')[i],
                 request.POST.getlist('ans_4')[i],
-                request.POST.getlist('correct_answer')[i])
+                request.POST.getlist('correct_answer')[i],
+                int(request.POST.getlist('point')[i]))
+        if sum>100:
+            warning="Sınavın Toplam Puanı 100'den büyük olamaz!"
+            return render(request, 'createExam.html', {'users': users, 'form': date , 'warning': warning})
         for student in request.POST.getlist('students'):
             ExamController(quiz.id).assign(student)
         return redirect('../../main/instructor')
-    return render(request, 'createExam.html', {'users': users})
+    return render(request, 'createExam.html', {'users': users, 'form': date, 'warning': warning})

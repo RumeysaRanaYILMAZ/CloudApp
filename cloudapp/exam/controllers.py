@@ -28,6 +28,7 @@ class ExamController:
                                      question.choice2, question.choice3,
                                      question.choice4, question.correct)
 
+
     def exam_show(self):
         return ExamView(self.exam.id)
 
