@@ -25,7 +25,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install flake8 pytest
         if [ -f requirements.txt ]; then pip install -r cloudapp/requirements.txt; fi
-        pip install tempus_dominus
+        pip install django-tempus-dominus
         pip install cryptography
         pip install django
     - name: DB migrations
