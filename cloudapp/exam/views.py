@@ -14,8 +14,25 @@ usermail = 'engin123@hotmail.com'
 
 
 # Create your views here. #11.ders 13 14
-def exam_detail(request):
-    return HttpResponse('<b>keke delete</b>')
+def exam_detail(request, exam_id):
+    examView = ExamController(exam_id).exam_show()
+    questions = examView.questions
+    print("-----------------------------------------------------------------")
+    print(examView)
+    print(
+        "---------------------------------------------------------------------------"
+    )
+    print(questions)
+    print(
+        "---------------------------------------------------------------------------"
+    )
+    email = request.session['user']
+    user = User.objects.filter(mail=email).get()
+    print(user.is_organizer)
+    return render(request, 'solvee.html', {
+        'questions': questions,
+        'student': not user.is_organizer
+    })
 
 
 def exam_index(
@@ -32,9 +49,11 @@ def exam_index(
 
 
 @csrf_exempt
-def exam_delete(request, examid):
-    print(examid)
-    return redirect('../main/instructor')
+def exam_delete(request, exam_id):
+    print(exam_id)
+    deleted = Exam.objects.filter(id=exam_id).get()
+    deleted.delete()
+    return redirect('../../../../main/instructor')
 
 
 def exam_scores(request, exam_id):
@@ -48,14 +67,13 @@ def exam_create(request):
     if request.method == 'POST':
         questnum = len(request.POST.getlist('question'))
         uscon = OrganizerController(usermail)
-        date = datetime.datetime(2021, 12, 2)
-        start = datetime.time(8, 30)
-        end = datetime.time(10, 30)
-        #print(request.POST)
+        date = datetime.datetime(2021, 2, 16)
+        start = datetime.time(12, 30)
+        end = datetime.time(15, 30)
         start_dt = datetime.datetime.combine(date.date(), start)
         end_dt = datetime.datetime.combine(date.date(), end)
         quiz = uscon.create_exam(request.POST['exam_name'], start_dt, end_dt)
-        for i in range(questnum - 1):
+        for i in range(questnum):
             ExamController(quiz.id).question_add(
                 request.POST.getlist('question')[i],
                 request.POST.getlist('ans_1')[i],
@@ -64,6 +82,6 @@ def exam_create(request):
                 request.POST.getlist('ans_4')[i],
                 request.POST.getlist('correct_answer')[i])
         for student in request.POST.getlist('students'):
-            print(student)
             ExamController(quiz.id).assign(student)
+        return redirect('../../main/instructor')
     return render(request, 'createExam.html', {'users': users})

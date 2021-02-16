@@ -45,7 +45,7 @@
                                     <p>Dont Cheat | Lecture</p>
                                     <div class="d-inline-block">
                                         {% if exam.status %}
-                                        <a href="#" class="genric-btn info circle arrow">Join Exam<span class="lnr lnr-arrow-right"></span></a>
+                                        <a href="{% url 'exam:detail' exam_id=exam.id %}" class="genric-btn info circle arrow">Join Exam<span class="lnr lnr-arrow-right"></span></a>
                                         {% else %}
                                         <a href="{% url 'exam:scores' exam_id=exam.id %}" class="genric-btn success circle arrow">See Your Grade<span class="lnr lnr-arrow-right"></span></a>
                                         {% endif %}
