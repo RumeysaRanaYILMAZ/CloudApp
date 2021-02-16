@@ -54,6 +54,20 @@ def logout(request):
     request.session['name'] = None
     return render(request, 'main.html')
 
-
+@csrf_exempt
 def register(request):
+
+    if request.method == 'POST':
+        iso=False
+        try:
+            request.POST['is_organizer']
+            iso = True
+        except :
+            iso=False
+
+        user=UserController.user_add(first_name=request.POST['name'],
+                                    last_name=request.POST['surname'],
+                                    isorganizer=iso,email=request.POST['email'],
+                                    password=request.POST['password'])
+        return render(request, 'login.html',{"msg":"Başarıyla Kaydoldunuz! Giriş yapabilirsiniz..."})
     return render(request, 'register.html')

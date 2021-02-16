@@ -8,4 +8,5 @@ urlpatterns = [
     url(r'^instructor/$', instructor_main, name='instructor'),
     url(r'^student/exam/', include('exam.urls')),
     url(r'^instructor/exam/', include('exam.urls')),
+
 ]

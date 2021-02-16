@@ -46,6 +46,22 @@ def exam_detail(request, exam_id):
         'student': not user.is_organizer
     })
 
+def exam_answer(request, exam_id):
+    print("kekekekeke------------------------------------------------------------------------------------------")
+    examView = ExamController(exam_id).exam_show()
+    questions = examView.questions
+    email = request.session['user']
+    user = User.objects.filter(mail=email).get()
+    asgment = Assignment.objects.filter(user_id=user.id,
+                                        exam_id=exam_id).get()
+    point=asgment.result
+
+    return render(request, 'solvee.html', {
+        'questions': questions,
+        'student': False,
+        'crr':True,
+        'result':point
+    })
 
 def exam_index(
     request

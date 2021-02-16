@@ -68,6 +68,7 @@
                                         <a href="{% url 'exam:detail' exam_id=exam.id %}" class="genric-btn info circle arrow">Join Exam<span class="lnr lnr-arrow-right"></span></a>
                                         {% else %}
                                         <a href="{% url 'exam:scores' exam_id=exam.id %}" class="genric-btn success circle arrow">See Your Grade<span class="lnr lnr-arrow-right"></span></a>
+                                        <a href="{% url 'exam:answers' exam_id=exam.id  %}" class="genric-btn info circle arrow">See Correct Answers <span class="lnr lnr-arrow-right"></span></a>
                                         {% endif %}
                                     </div>
                                     </div>
