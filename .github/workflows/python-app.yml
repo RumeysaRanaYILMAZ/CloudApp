@@ -30,4 +30,5 @@ jobs:
         pip install django
     - name: DB migrations
       run: |
+        python cloudapp/manage.py makemigrations
         python cloudapp/manage.py migrate
