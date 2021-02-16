@@ -28,6 +28,7 @@ def exam_detail(request, exam_id):
         asgment = Assignment.objects.filter(user_id=user.id,
                                             exam_id=exam_id).get()
         asgment.completed=True
+        asgment.save()
 
         for j in range(i):
             AnswerController.answer(
