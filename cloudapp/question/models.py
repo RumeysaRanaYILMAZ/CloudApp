@@ -12,12 +12,21 @@ class ExamStatus(Enum):
     NotStarted = " NOT STARTED"
     Open = "OPEN"
     TimesUp = "TIME'S UP"
+    Completed = "COMPLETED"
 
 
 def validate_choice(value):
     if value > 4:
         raise ValidationError(
             ('Index %(value)s is not a choice'),
+            params={'value': value},
+        )
+
+
+def under100(value):
+    if value > 100:
+        raise ValidationError(
+            ('Question point is not over 100 point'),
             params={'value': value},
         )
 
@@ -37,6 +46,7 @@ class Question(models.Model):
     correct = IntegerField(db_column='CORRECT',
                            default=1,
                            validators=[validate_choice])
+    point = IntegerField(default=0, validators=[under100])
 
     class Meta:
         db_table = "QUESTION"
@@ -48,7 +58,7 @@ class Answer(models.Model):
                              db_column='QUESTID',
                              default='',
                              on_delete=models.CASCADE)
-    assingment_id = ForeignKey(Assignment,
+    assignment_id = ForeignKey(Assignment,
                                db_column='ASNID',
                                default='',
                                on_delete=models.CASCADE)
@@ -58,7 +68,7 @@ class Answer(models.Model):
 
     class Meta:
         db_table = "ANSWER"
-        unique_together = (("question_id", "assingment_id"), )
+        unique_together = (("question_id", "assignment_id"), )
 
 
 class CreatedQuiz:
@@ -84,7 +94,7 @@ class AssignedQuiz:
     end_date = None
     status = None
 
-    def __init__(self, exid, name, surname, qname, start, end):
+    def __init__(self, exid, name, surname, qname, start, end, stat):
         self.id = exid
         self.org_name = name + " " + surname
         utc = pytz.UTC
@@ -92,7 +102,9 @@ class AssignedQuiz:
         self.start_date = start
         self.end_date = end
         now = utc.localize(dt.datetime.now())
-        if start > now:
+        if stat == 1:
+            self.status = 0
+        elif start > now:
             self.status = 0
         elif start < now and end > now:
             self.status = 1

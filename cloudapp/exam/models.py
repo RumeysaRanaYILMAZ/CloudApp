@@ -1,5 +1,5 @@
 from django.db import models
-from django.db.models.fields import CharField, DateTimeField, IntegerField
+from django.db.models.fields import BooleanField, CharField, DateTimeField, IntegerField
 from django.db.models.fields.related import ForeignKey
 from user.models import User
 
@@ -25,7 +25,7 @@ class Assignment(models.Model):
     id = CharField(max_length=20, primary_key=True, db_column='id')
     user_id = ForeignKey(User, db_column='STUDENT', on_delete=models.CASCADE)
     exam_id = ForeignKey(Exam, db_column='EXAMID', on_delete=models.CASCADE)
-
+    completed = BooleanField(default=False, db_column='COMPLETED')
     result = IntegerField(db_column='RESULT', default=0)
 
     class Meta:

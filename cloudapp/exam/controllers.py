@@ -31,7 +31,7 @@ class ExamController:
     def exam_show(self):
         return ExamView(self.exam.id)
 
-    def question_add(self, contxt, ch1, ch2, ch3, ch4, corr):
+    def question_add(self, contxt, ch1, ch2, ch3, ch4, corr, pnt):
         questid = IDGenerator.generate(Entity.Question)
         Question(id=questid,
                  exam_id=self.exam,
@@ -40,7 +40,8 @@ class ExamController:
                  choice2=ch2,
                  choice3=ch3,
                  choice4=ch4,
-                 correct=corr).save()
+                 correct=corr,
+                 point=pnt).save()
 
     def assign(self, userid):
         assignid = IDGenerator.generate(Entity.Assignment)
@@ -48,19 +49,20 @@ class ExamController:
         Assignment(id=assignid, exam_id=self.exam, user_id=user).save()
 
     def result_calculate(self, email):
-        results = {"correct": 0, "wrong": 0}
+        grade = 0
         user = User.objects.filter(mail=email).get()
         assignment = Assignment.objects.filter(user_id=user.id,
                                                exam_id=self.exam.id).get()
-        answers = Answer.object.filter(assignment_id=assignment.id)
+        answers = Answer.objects.filter(assignment_id=assignment.id)
 
         for answer in answers:
-            quest = Question.objects.filter(pk=answer.question_id).get()
-            if quest.correct == answer.answer:
-                results["correct"] += 1
-            else:
-                results["wrong"] += 1
-        return results
+            print("------------------------")
+            print(answer.question_id)
+            if answer.question_id.correct == answer.answer:
+                grade += answer.question_id.point
+        assignment.result = grade
+        assignment.save()
+        return grade
 
     @staticmethod
     def show_assigned_exams(email):
@@ -73,7 +75,7 @@ class ExamController:
                 AssignedQuiz(assign.exam_id.id, assign.exam_id.organizer.name,
                              assign.exam_id.organizer.surname,
                              assign.exam_id.name, assign.exam_id.start_time,
-                             assign.exam_id.end_time))
+                             assign.exam_id.end_time, assign.completed))
         return examlist
 
     @staticmethod
