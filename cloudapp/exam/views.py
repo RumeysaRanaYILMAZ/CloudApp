@@ -90,6 +90,12 @@ def exam_create(request):
         sum = 0
         for i in range(questnum):
             sum += int(request.POST.getlist('point')[i])
+        if sum>100:
+            msg="Sınavın Toplam Puanı 100'den büyük olamaz!"
+            return render(request, 'createExam.html', {'users': users, 'form': date,'warning':True,'message':msg})
+        sum = 0
+        for i in range(questnum):
+            sum += int(request.POST.getlist('point')[i])
             ExamController(quiz.id).question_add(
                 request.POST.getlist('question')[i],
                 request.POST.getlist('ans_1')[i],
@@ -98,9 +104,7 @@ def exam_create(request):
                 request.POST.getlist('ans_4')[i],
                 request.POST.getlist('correct_answer')[i],
                 int(request.POST.getlist('point')[i]))
-        if sum>100:
-            msg="Sınavın Toplam Puanı 100'den büyük olamaz!"
-            return render(request, 'createExam.html', {'users': users, 'form': date,'warning':True,'message':msg})
+
         for student in request.POST.getlist('students'):
             ExamController(quiz.id).assign(student)
         exams = Exam.objects.all()

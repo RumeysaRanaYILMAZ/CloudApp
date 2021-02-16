@@ -50,27 +50,58 @@
                                                                         <div class="col-xs-3 5">
 
                                                                         </div>
-                                                                        {% if question.correct == "1"  %}
-                                                                        {% endif %}
 
                                                                         <div class="quiz" id="quiz" data-toggle="buttons">
-                                                                            <label class="element-animation1 btn btn-lg btn-danger btn-block">
+                                                                            {% if cor %}
+                                                                                <label class="element-animation1 btn btn-lg btn-danger btn-block">
                                                                                 <span class="btn-label"><i class="glyphicon glyphicon-chevron-right"></i></span>
                                                                                 <input type="checkbox" id=""name="choice" value="1">
                                                                                 {{ question.choice1}}
                                                                             </label>
+                                                                            {% elif ch %}
+                                                                                <label class="element-animation1 btn btn-lg btn-danger btn-block">
+                                                                                <span class="btn-label"><i class="glyphicon glyphicon-chevron-right"></i></span>
+                                                                                <input type="checkbox" id=""name="choice" value="1">
+                                                                                {{ question.choice1}}
+                                                                            </label>
+                                                                            {% endif %}
+
+                                                                        {% if cor %}
                                                                             <label class="element-animation2 btn btn-lg btn-danger btn-block">
                                                                                 <span class="btn-label"><i class="glyphicon glyphicon-chevron-right"></i></span>
                                                                                 <input type="checkbox" name="choice" value="2">{{ question.choice2}}
                                                                             </label>
+                                                                            {% elif ch %}
+                                                                            <label class="element-animation2 btn btn-lg btn-danger btn-block">
+                                                                                <span class="btn-label"><i class="glyphicon glyphicon-chevron-right"></i></span>
+                                                                                <input type="checkbox" name="choice" value="2">{{ question.choice2}}
+                                                                            </label>
+                                                                            {% endif %}
+
+                                                                        {% if cor %}
                                                                             <label class="element-animation3 btn btn-lg btn-danger btn-block active">
                                                                                 <span class="btn-label"><i class="glyphicon glyphicon-chevron-right"></i></span>
                                                                                 <input type="checkbox" name="choice" value="3">{{ question.choice3}}
                                                                             </label>
+                                                                            {% elif ch %}
+                                                                            <label class="element-animation3 btn btn-lg btn-danger btn-block active">
+                                                                                <span class="btn-label"><i class="glyphicon glyphicon-chevron-right"></i></span>
+                                                                                <input type="checkbox" name="choice" value="3">{{ question.choice3}}
+                                                                            </label>
+                                                                            {% endif %}
+
+                                                                        {% if a %}
                                                                             <label class="element-animation4 btn btn-lg btn-danger btn-block">
                                                                                 <span class="btn-label"><i class="glyphicon glyphicon-chevron-right"></i></span>
                                                                                 <input type="checkbox" name="choice" value="4"> {{ question.choice4}}
                                                                             </label>
+                                                                            {% elif b %}
+                                                                            <label class="element-animation4 btn btn-lg btn-danger btn-block">
+                                                                                <span class="btn-label"><i class="glyphicon glyphicon-chevron-right"></i></span>
+                                                                                <input type="checkbox" name="choice" value="4"> {{ question.choice4}}
+                                                                            </label>
+                                                                            {% endif %}
+
 
                                                                         </div>
                                                                             <br>
@@ -82,14 +113,6 @@
                                                            </div>
 
                                                            {% endfor %}
-                                                           {% if student %}
-                                                           <div class="col-xl-12 col-lg-12 col-md-12 ">
-                                                                <div class="d-flex justify-content-end ">
-                                                                    <li class="button-header margin-right "><input class="btn btn-primary" type="submit" value="Submit Exam"></li>
-                                                                </div>
-                                                            {% endif%}
-
-                                                           </div>
                                                            <br><br>
                                                        </form>
                                                    </div>
