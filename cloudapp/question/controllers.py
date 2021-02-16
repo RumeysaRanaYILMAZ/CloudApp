@@ -9,11 +9,11 @@ class AnswerController:
     def answer(questid, usid, ansnumber):
         question = Question.objects.filter(id=questid).get()
         assignment = Assignment.objects.filter(user_id=usid,
-                                               exam_id=question.exam_id)
+                                               exam_id=question.exam_id).get()
         answerid = IDGenerator.generate(Entity.Answer)
         Answer(id=answerid,
-               question_id=question.id,
-               assignment_id=assignment.id,
+               question_id=question,
+               assingment_id=assignment,
                answer=ansnumber).save()
 
 
