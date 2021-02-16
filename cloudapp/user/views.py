@@ -28,19 +28,31 @@ def login(request):
         password = request.POST['password']
         loguser = UserController.login(mail, password)
         if loguser is None:
+            request.session['logged'] = 0
             return render(request, 'login.html')
         userform = UserForm.mail = mail
         if loguser.is_organizer:
             request.session['user'] = loguser.mail
             request.session['logged'] = 1
             request.session['organizer'] = 1
+            request.session['name'] = loguser.name + " " + loguser.surname
             return redirect('../main/instructor', {'userform': userform})
         else:
             request.session['user'] = loguser.mail
             request.session['logged'] = 1
             request.session['organizer'] = 0
+            request.session['name'] = loguser.name + " " + loguser.surname
             return redirect('../main/student', {'userform': userform})
     return render(request, 'login.html')
+
+
+@csrf_exempt
+def logout(request):
+    request.session['user'] = None
+    request.session['logged'] = 0
+    request.session['organizer'] = None
+    request.session['name'] = None
+    return render(request, 'main.html')
 
 
 def register(request):

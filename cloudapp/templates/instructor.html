@@ -44,15 +44,23 @@
 
                                     <p>Dont Cheat | Lecture</p>
                                     <div class="d-inline-block">
-                                        <a href="#" class="genric-btn info circle arrow">Update<span class="lnr lnr-arrow-right"></span></a>
-                                        <a href="#" class="genric-btn success circle arrow">Results<span class="lnr lnr-arrow-right"></span></a>
+                                        <a href="{% url 'exam:detail' exam_id=exam.id %}" class="genric-btn info circle arrow">Detail<span class="lnr lnr-arrow-right"></span></a>
+                                        <a href="{% url 'exam:scores' exam_id=exam.id %}" class="genric-btn success circle arrow">Results<span class="lnr lnr-arrow-right"></span></a>
+                                        <a href="{% url 'exam:delete' exam_id=exam.id %}" class="genric-btn danger circle arrow">Delete<span class="lnr lnr-arrow-right"></span></a>
                                     </div>
                                     </div>
 
 
                             </article>
                             {% endfor%}
-
+                            <div class="col-xl-12 col-lg-12 col-md-12 ">
+                                <div class="d-flex justify-content-center ">
+                                    <li class="button-header margin-right ">
+                                        <a id="createQuestion"class="btn  btn-success"  href="{% url 'exam:create' %}" type="button" value="Create Exam">Create Exam</a>
+                                    </li>
+                                </div>
+                             </div>
+                            <br><br>
                             <nav class="blog-pagination justify-content-center d-flex">
                                 <ul class="pagination">
                                     <li class="page-item">
