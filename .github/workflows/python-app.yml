@@ -25,7 +25,4 @@ jobs:
         python -m pip install --upgrade pip
         pip install flake8 pytest
         if [ -f requirements.txt ]; then pip install -r cloudapp/requirements.txt; fi
-        pip install django
-    - name: DB migrations
-      run: |
-        python cloudapp/manage.py migrate
+
