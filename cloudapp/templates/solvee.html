@@ -36,18 +36,21 @@
                                                            
                                                            {% for question in questions %}
                                                            <h2>{{question.examid}}</h2>
+                                                                <input style=" visibility: hidden" type="text" name="question_id" value="{{ question.id }}">
+                                                                        <input style=" visibility: hidden" type="text" name="correct_ans" value="{{ question.correct }}">
+                                                                         <input style=" visibility: hidden" type="text" name="q_examid" value="{{ question.exam_id }}">
                                                            <div id ="duplicater">
                                                                 <div class="modal-dialog">
                                                                 <div class="modal-content">
+
                                                                     <div class="modal-header">
                                                                         <h3>Q. {{ question.context}}</h3>
                                                                     </div>
                                                                     <div class="modal-body">
                                                                         <div class="col-xs-3 5">
+
                                                                         </div>
-                                                                        <input style=" visibility: hidden" type="text" name="question_id" value="{{ question.id }}">
-                                                                        <input style=" visibility: hidden" type="text" name="correct_ans" value="{{ question.correct }}">
-                                                                         <input style=" visibility: hidden" type="text" name="q_examid" value="{{ question.exam_id }}">
+
                                                                         <div class="quiz" id="quiz" data-toggle="buttons">
                                                                             <label class="element-animation1 btn btn-lg btn-danger btn-block">
                                                                                 <span class="btn-label"><i class="glyphicon glyphicon-chevron-right"></i></span>
@@ -66,12 +69,16 @@
                                                                                 <span class="btn-label"><i class="glyphicon glyphicon-chevron-right"></i></span>
                                                                                 <input type="checkbox" name="choice" value="4"> {{ question.choice4}}
                                                                             </label>
+
                                                                         </div>
+                                                                            <br>
+                                                                            <h3 style="color: #0c5460">Question Point : {{ question.point}}</h3>
                                                                     </div>
                                                                 </div>
                                                                 </div>
                                                            <br><br>
                                                            </div>
+
                                                            {% endfor %}
                                                            {% if student %}
                                                            <div class="col-xl-12 col-lg-12 col-md-12 ">

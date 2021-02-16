@@ -2,6 +2,7 @@ from exam.controllers import ExamController
 from question.controllers import AnswerController
 from user.controllers import OrganizerController
 from user.models import User
+
 from .forms import dateForm
 from django.shortcuts import render, HttpResponse, get_object_or_404, redirect
 from .models import Assignment, Exam
@@ -20,10 +21,14 @@ def exam_detail(request, exam_id):
     email = request.session['user']
     user = User.objects.filter(mail=email).get()
     if request.method == 'POST':
+
+
         i = len(request.POST.getlist('question_id'))
         print(request.POST)
         asgment = Assignment.objects.filter(user_id=user.id,
                                             exam_id=exam_id).get()
+        asgment.completed=True
+
         for j in range(i):
             AnswerController.answer(
                 request.POST.getlist('question_id')[j], asgment,
@@ -31,6 +36,10 @@ def exam_detail(request, exam_id):
 
         a = ExamController(exam_id).result_calculate(email)
         print(a)
+        mail = request.session['user']
+        exams = ExamController.show_assigned_exams(mail)
+        msg="Sınav Başarıyla Tamamladı!"
+        return render(request, 'student.html', {'exams': exams,'message':msg,'warning':False})
     return render(request, 'solvee.html', {
         'questions': questions,
         'student': not user.is_organizer
@@ -67,7 +76,7 @@ def exam_scores(request, exam_id):
 def exam_create(request):
     users = User.objects.filter(is_organizer=0)
     date = dateForm
-    warning=""
+    msg=""
     if request.method == 'POST':
         questnum = len(request.POST.getlist('question'))
         uscon = OrganizerController(usermail)
@@ -89,9 +98,11 @@ def exam_create(request):
                 request.POST.getlist('correct_answer')[i],
                 int(request.POST.getlist('point')[i]))
         if sum>100:
-            warning="Sınavın Toplam Puanı 100'den büyük olamaz!"
-            return render(request, 'createExam.html', {'users': users, 'form': date , 'warning': warning})
+            msg="Sınavın Toplam Puanı 100'den büyük olamaz!"
+            return render(request, 'createExam.html', {'users': users, 'form': date,'warning':True,'message':msg})
         for student in request.POST.getlist('students'):
             ExamController(quiz.id).assign(student)
-        return redirect('../../main/instructor')
-    return render(request, 'createExam.html', {'users': users, 'form': date, 'warning': warning})
+        exams = Exam.objects.all()
+        msg="Sınav Başarıyla Oluşturuldu!"
+        return render(request, 'instructor.html', {'exams': exams,'warning':False,'message':msg})
+    return render(request, 'createExam.html', {'users': users, 'form': date})

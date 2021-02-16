@@ -81,8 +81,9 @@
                                             <ul id="navigation">
                                                 {% if request.session.organizer %}
                                                 <a href="{% url 'user:instructor' %}">Home</a>
+
                                                 {% else %}
-                                                <a href="{% url 'user:student' %}">Home</a>
+                                                    <a href="{% url 'user:student' %}">Home</a>
                                                 {% endif %}
                                                 <!-- Button -->
                                                 {% if request.session.logged %}
@@ -110,6 +111,8 @@
         <!-- Header End -->
     </header>
 
+
+
         {% block body %}
 
          {% endblock %}
@@ -130,13 +133,12 @@
                                 </div>
                                 <div class="footer-tittle">
                                     <div class="footer-pera">
-                                        <p>Find experts, get your things done easily and quickly.
-                                          Find customers easily and quickly.</p>
+                                        <p>Online Quiz System
+                                          Schedule your exams quickly.</p>
 
                                     </div>
                                 </div>
-                                <!-- social -->
-                                <div class="footer-social">
+                                <!-- social --><div class="footer-social">
                                     <a href="#"><i class="fab fa-twitter"></i></a>
                                     <a href="https://bit.ly/sai4ull"><i class="fab fa-facebook-f"></i></a>
                                     <a href="#"><i class="fab fa-pinterest-p"></i></a>
@@ -144,42 +146,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-2 col-lg-3 col-md-4 col-sm-5">
-                        <div class="single-footer-caption mb-50">
-                            <div class="footer-tittle">
-                                <h4>Our solutions</h4>
-                                <ul>
-                                    <li><a href="#">Cleaning</a></li>
-                                    <li><a href="#">Online Courses</a></li>
-                                    <li><a href="#">Transport</a></li>
-                                    <li><a href="#">Programing</a></li>
-                                    <li><a href="#">Beauty</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-2 col-lg-4 col-md-4 col-sm-6">
-                        <div class="single-footer-caption mb-50">
-                            <div class="footer-tittle">
-                                <h4>Support</h4>
-                                <ul>
-                                    <li><a href="#">Experts</a></li>
-                                    <li><a href="#">Get Support</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6">
-                        <div class="single-footer-caption mb-50">
-                            <div class="footer-tittle">
-                                <h4>Contact</h4>
-                                <ul>
-                                    <li><a href="#">Developers</a></li>
-                                    <li><a href="#">Experts</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+
                 </div>
             </div>
         </div>
