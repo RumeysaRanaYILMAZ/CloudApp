@@ -1,4 +1,5 @@
 from django import forms
+from tempus_dominus.widgets import DatePicker, TimePicker, DateTimePicker
 
 
 class QuestionForm(forms.Form):
@@ -9,7 +10,18 @@ class QuestionForm(forms.Form):
     ans_4 = forms.CharField(label='ans_4', max_length=400)
 
 
-from tempus_dominus.widgets import DatePicker, TimePicker, DateTimePicker
+
+class DatetimeForm(forms.Form):
+    date = forms.DateTimeField(
+        input_formats=['%d/%m/%Y %H:%M'],
+        widget=forms.DateTimeInput(attrs={
+            'class': 'form-control datetimepicker-input',
+            'data-target': '#datetimepicker1'
+        })
+    )
+
+
+
 
 
 class dateForm(forms.Form):

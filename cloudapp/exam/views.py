@@ -2,9 +2,8 @@ from exam.controllers import ExamController
 from question.controllers import AnswerController
 from user.controllers import OrganizerController
 from user.models import User
-
-from .forms import dateForm
-from django.shortcuts import render, HttpResponse, get_object_or_404, redirect
+import dateutil.parser as parser
+from django.shortcuts import render, redirect
 from .models import Assignment, Exam
 from .forms import QuestionForm
 import datetime
@@ -92,23 +91,28 @@ def exam_scores(request, exam_id):
 @csrf_exempt
 def exam_create(request):
     users = User.objects.filter(is_organizer=0)
-    date = dateForm
+
     msg=""
     if request.method == 'POST':
         questnum = len(request.POST.getlist('question'))
         uscon = OrganizerController(usermail)
         date = datetime.datetime(2021, 2, 16)
+        print(request.POST)
 
-        end = datetime.time(15, 30)
-        end_dt = datetime.datetime.combine(date.date(), end)
-        start_dt=end_dt
+        start_dt=parser.parse(request.POST['start'])
+        end_dt = parser.parse(request.POST['end'])
+        print(type(end_dt),"----------------------------******************************************")
+
         quiz = uscon.create_exam(request.POST['exam_name'], start_dt, end_dt)
         sum = 0
         for i in range(questnum):
             sum += int(request.POST.getlist('point')[i])
-        if sum>100:
-            msg="Sınavın Toplam Puanı 100'den büyük olamaz!"
-            return render(request, 'createExam.html', {'users': users, 'form': date,'warning':True,'message':msg})
+        if sum != 100:
+            msg="Sınavın Toplam Puanı 100 olmalıdır! Bu soruların toplam puanı :"+str(sum)
+            return render(request, 'createExam.html', {'users': users, 'warning':True,'message':msg})
+        if end_dt > start_dt:
+            msg="Sınav bitiş zamanı başlangıç zamanından geri bir tarihte olamaz!"
+            return render(request, 'createExam.html', {'users': users, 'warning':True,'message':msg})
         sum = 0
         for i in range(questnum):
             sum += int(request.POST.getlist('point')[i])
@@ -126,4 +130,4 @@ def exam_create(request):
         exams = Exam.objects.all()
         msg="Sınav Başarıyla Oluşturuldu!"
         return render(request, 'instructor.html', {'exams': exams,'warning':False,'message':msg})
-    return render(request, 'createExam.html', {'users': users, 'form': date})
+    return render(request, 'createExam.html', {'users': users})
