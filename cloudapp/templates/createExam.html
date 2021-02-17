@@ -35,17 +35,28 @@
 
 										<div class="section-top-border">
                                             <div class="row">
-                                                
-                                                <div class="col-xl-12 col-lg-12 col-md-12 ">
-                                                    <div class="d-flex justify-content-center ">
 
-                                                        <li class="button-header margin-right ">Datetime picker and time picker area </li>  
+                                                   {% if message %}
 
-                                                       
-                                                    </div>
-                                                                          
 
-                                                </div>
+
+                                                                       {% if warning %}
+                                                                        <div class="col-lg-12 mb-12 mb-lg-12">
+                                                                            <div class="alert alert-danger" role="alert">
+                                                                               {{ message }}
+                                                                            </div>
+                                                                        </div>
+                                                                        {% else %}
+                                                                        <div class="col-lg-12 mb-12 mb-lg-12">
+                                                                            <div class="alert alert-success" role="alert">
+                                                                               {{ message }}
+                                                                            </div>
+                                                                        </div>
+                                                                       {% endif %}
+
+
+
+                                                   {% endif %}
                                             </div>
                                             <br><br>
                                             <div class="row">

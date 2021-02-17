@@ -26,9 +26,33 @@
             </div>
         </section>
         <!--? Blog Area Start-->
+
         <section class="blog_area section-padding">
             <div class="container">
                 <div class="row">
+
+                {% if message %}
+
+
+
+                     {% if warning %}
+                          <div class="col-lg-12 mb-12 mb-lg-12">
+                               <div class="alert alert-danger" role="alert">
+                                     {{ message }}
+                               </div>
+                          </div>
+                     {% else %}
+                          <div class="col-lg-12 mb-12 mb-lg-12">
+                                <div class="alert alert-success" role="alert">
+                                      {{ message }}
+                                </div>
+                          </div>
+                     {% endif %}
+
+
+                {% endif %}
+
+                    <br><br>
                     <div class="col-lg-12 mb-12 mb-lg-12">
                         <div class="blog_left_sidebar">
 
@@ -83,6 +107,7 @@
                             </nav>
                         </div>
                     </div>
+
 
                 </div>
             </div>
