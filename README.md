@@ -3,6 +3,27 @@
 
 You can create exams, join exams, see global grades with this exam app. This is a django app.
 
+
+![online quiz app](1.jpg)
+
+
+
+![online quiz app](2.jpg)
+
+
+![online quiz app](3.jpg)
+
+
+
+![online quiz app](4.jpg)
+
+
+![online quiz app](5.jpg)
+
+
+![online quiz app](6.jpg)
+
+
 Student Login Info 
 email :semakaraca@hotmail.com
 pssw: 123456
@@ -12,7 +33,7 @@ Instructor Login Info
 email : engin123@hotmail.com
 pssw: engin123
 
-![Fionse APP](4.jpg)
+
 
 To Find Out More Check templatesStatics
 
